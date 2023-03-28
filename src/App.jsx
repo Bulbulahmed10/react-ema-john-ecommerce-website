@@ -1,11 +1,12 @@
 import React from 'react'
+import Header from './Components/Header/Header'
 import "./index.css"
 
 
 const App = () => {
   return (
-    <div className='text-center text-3xl font-bold'>
-      
+    <div>
+      <Header />
     </div>
   )
 }
