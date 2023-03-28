@@ -1,12 +1,11 @@
-import { useState } from 'react'
+import React from 'react'
+import "./index.css"
 
 
-function App() {
- 
-
+const App = () => {
   return (
-    <div>
-     <h1>hello react</h1>
+    <div className='text-center text-3xl font-bold'>
+      
     </div>
   )
 }
