@@ -3,7 +3,7 @@ import logo from "../.././assets/Logo.svg";
 
 const Header = () => {
   return (
-    <header className="flex items-center justify-between bg-[#1C2B35] px-20 py-3">
+    <header className="flex items-center justify-between bg-[#1C2B35] px-20 py-3 sticky top-0 z-50">
       <img src={logo} alt="" />
       <nav className="text-white flex gap-10">
         <a className="hover:text-blue-400 relative" href="/order">
