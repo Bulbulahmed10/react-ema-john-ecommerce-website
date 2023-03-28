@@ -2,7 +2,7 @@ import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import noImage from "../../assets/no-image.png";
-const Product = ({ category, name, seller, price, ratings, img }) => {
+const Product = ({ id, name, seller, price, ratings, img, stock, handleAddToCart }) => {
   const starRating = (ratings) => {
     const stars = [];
     for (let i = 0; i < ratings; i++) {
@@ -31,7 +31,9 @@ const Product = ({ category, name, seller, price, ratings, img }) => {
           </p>
           <div>{starRating(ratings)}</div>
           <div className="card-actions justify-end">
-            <button className="btn btn-primary my-2">Add to Cart</button>
+            <p onClick={() => handleAddToCart({id, name, price, img, stock})}>
+              <button className="btn btn-primary my-2">Add to Cart</button>
+            </p>
           </div>
         </div>
       </div>

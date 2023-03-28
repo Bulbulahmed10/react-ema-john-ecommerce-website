@@ -6,9 +6,12 @@ const Header = () => {
     <header className="flex items-center justify-between bg-[#1C2B35] px-20 py-3 sticky top-0 z-50">
       <img src={logo} alt="" />
       <nav className="text-white flex gap-10">
-        <a className="hover:text-blue-400 relative" href="/order">
+        <label
+          htmlFor="my-modal-3"
+          className="hover:text-blue-400 cursor-pointer relative">
           Cart
-        </a>
+        </label>
+
         <a className="hover:text-blue-400" href="/order">
           Order
         </a>
