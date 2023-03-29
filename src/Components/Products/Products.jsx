@@ -1,27 +1,48 @@
 import React, { useEffect, useState } from "react";
+import {
+  addToDb,
+  getShoppingCart,
+  removeFromLocalStorage,
+} from "../../utilities/localStorageDB";
 import CartModal from "../CartModal/CartModal";
 import Product from "../Product/Product";
 
-const Products = () => {
+const Products = ({ setCartLength }) => {
   const [products, setProducts] = useState([]);
   const [singleProduct, setSingleProduct] = useState([]);
-  
   const handleAddToCart = (product) => {
     const newCart = [...singleProduct, product];
-    setSingleProduct(newCart)
-
-    
-  }
-
-  
+    setSingleProduct(newCart);
+    addToDb(product.id);
+  };
 
   useEffect(() => {
     const URL =
       "https://raw.githubusercontent.com/ProgrammingHero1/ema-john-resources/main/fakeData/products.json";
+
     fetch(URL)
       .then((res) => res.json())
       .then((data) => setProducts(data));
   }, []);
+
+  useEffect(() => {
+    const savedCart = [];
+    const storedCart = getShoppingCart();
+    for (const id in storedCart) {
+      const addedProduct = products.find((pd) => pd.id === id);
+      if (addedProduct) {
+        const quantity = storedCart[id];
+        addedProduct.quantity = quantity;
+        savedCart.push(addedProduct);
+      }
+    }
+
+    setSingleProduct(savedCart);
+  }, [products]);
+
+  useEffect(() => {
+    setCartLength(singleProduct.length);
+  }, [handleAddToCart]);
 
   return (
     <>
@@ -31,7 +52,11 @@ const Products = () => {
         </h1>
         <div className="grid grid-cols-4 gap-3 px-16">
           {products.map((product) => (
-            <Product key={product.id} {...product} handleAddToCart={handleAddToCart}  />
+            <Product
+              key={product.id}
+              {...product}
+              handleAddToCart={handleAddToCart}
+            />
           ))}
         </div>
       </div>

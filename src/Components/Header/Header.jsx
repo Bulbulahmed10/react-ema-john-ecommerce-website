@@ -1,7 +1,7 @@
 import React from "react";
 import logo from "../.././assets/Logo.svg";
 
-const Header = () => {
+const Header = ({ totalCart }) => {
   return (
     <header className="flex items-center justify-between bg-[#1C2B35] px-20 py-3 sticky top-0 z-50">
       <img src={logo} alt="" />
@@ -24,9 +24,11 @@ const Header = () => {
         <a className="hover:text-blue-400" href="/login">
           Login
         </a>
-        <p className="absolute ml-6 -mt-2 bg-red-400 px-[6px] rounded-full text-sm">
-          0
-        </p>
+        {totalCart > 0 && (
+          <p className="absolute ml-6 -mt-2 bg-red-500 px-[6px] rounded-full text-sm ">
+            {totalCart < 10 ? "0" + totalCart : totalCart}
+          </p>
+        )}
       </nav>
     </header>
   );

@@ -1,8 +1,18 @@
-import React from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import noImage from "../../assets/no-image.png";
-const Product = ({ id, name, seller, price, ratings, img, stock, handleAddToCart }) => {
+const Product = ({
+  id,
+  name,
+  seller,
+  price,
+  ratings,
+  img,
+  stock,
+  shipping,
+  handleAddToCart,
+}) => {
   const starRating = (ratings) => {
     const stars = [];
     for (let i = 0; i < ratings; i++) {
@@ -11,6 +21,7 @@ const Product = ({ id, name, seller, price, ratings, img, stock, handleAddToCart
 
     return <div className="text-yellow-600"> {stars} </div>;
   };
+
   return (
     <>
       <div className="card w-full bg-base-100 shadow-xl">
@@ -31,9 +42,11 @@ const Product = ({ id, name, seller, price, ratings, img, stock, handleAddToCart
           </p>
           <div>{starRating(ratings)}</div>
           <div className="card-actions justify-end">
-            <p onClick={() => handleAddToCart({id, name, price, img, stock})}>
-              <button className="btn btn-primary my-2">Add to Cart</button>
-            </p>
+            <button
+              onClick={() => handleAddToCart({ id, name, price, img, stock, shipping })}
+              className="btn btn-primary my-2">
+              Add to Cart
+            </button>
           </div>
         </div>
       </div>
