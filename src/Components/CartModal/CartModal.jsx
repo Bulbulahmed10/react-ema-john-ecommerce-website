@@ -1,36 +1,40 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import minus from "../.././assets/minus.png";
 import plus from "../.././assets/add.png";
 import { getShoppingCart } from "../../utilities/localStorageDB";
-import "./CartModal.css"
+import "./CartModal.css";
 
-
-
-const CartModal = ({ singleProduct, setSingleProduct }) => {
+const CartModal = ({ singleCartProductArr, setSingleCartProductArr }) => {
+  const [isEmptyCart, setIsEmptyCart] = useState(false);
 
   let totalPrice = 0;
   let totalShipping = 0;
-  for (const product of singleProduct) {
+  for (const product of singleCartProductArr) {
     totalPrice += product.price;
     totalShipping += product.shipping;
   }
   const totalTax = (totalPrice * 8) / 100;
   const grandTotal = totalPrice + totalShipping + totalTax;
 
-
   const removeFromLocalStorage = (id) => {
-    let shoppingCart = getShoppingCart()
-    if(id in shoppingCart) {
-      delete shoppingCart[id]
-      localStorage.setItem("shopping-cart", JSON.stringify(shoppingCart))
+    let shoppingCart = getShoppingCart();
+    if (id in shoppingCart) {
+      delete shoppingCart[id];
+      localStorage.setItem("shopping-cart", JSON.stringify(shoppingCart));
     }
-  const kd =  singleProduct.filter(pd => pd.id !== id)
-    setSingleProduct(kd)
-    
-  }
+    const remainingCartProduct = singleCartProductArr.filter(
+      (pd) => pd.id !== id
+    );
+    setSingleCartProductArr(remainingCartProduct);
+  };
 
+  const removeAllCartProductFromLocalStorage = () => {
+    localStorage.removeItem("shopping-cart");
+    setIsEmptyCart(true);
+    setSingleCartProductArr([]);
+  };
 
   return (
     <>
@@ -42,7 +46,7 @@ const CartModal = ({ singleProduct, setSingleProduct }) => {
             className="btn btn-sm btn-circle absolute right-2 top-2">
             ✕
           </label>
-          {singleProduct.length > 0 ? (
+          {singleCartProductArr.length > 0 && isEmptyCart === false ? (
             <div>
               <div className="flex items-center justify-between w-[60%] font-bold">
                 <p className="ml-32">Name</p>
@@ -53,7 +57,7 @@ const CartModal = ({ singleProduct, setSingleProduct }) => {
               </div>
               <section className="flex justify-between py-2">
                 <div className="w-[80%] h-[340px] overflow-y-scroll flex flex-col gap-y-[12px]">
-                  {singleProduct.map((singleCartProduct) => (
+                  {singleCartProductArr.map((singleCartProduct) => (
                     <div
                       key={singleCartProduct.id}
                       className="flex items-center justify-between shadow-md py-1 px-2 rounded-md border-2 bg-slate-200">
@@ -121,7 +125,11 @@ const CartModal = ({ singleProduct, setSingleProduct }) => {
                     <p className="font-bold">${grandTotal.toFixed(2)}</p>
                   </div>
                   <div className="flex items-center gap-4">
-                    <button className="btn btn-warning">Clear cart</button>
+                    <button
+                      onClick={removeAllCartProductFromLocalStorage}
+                      className="btn btn-warning">
+                      Clear cart
+                    </button>
                     <button className="btn btn-success">
                       Proceed to checkout
                     </button>
@@ -140,4 +148,4 @@ const CartModal = ({ singleProduct, setSingleProduct }) => {
   );
 };
 
-export default CartModal
+export default CartModal;

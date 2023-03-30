@@ -1,17 +1,14 @@
 import React, { useEffect, useState } from "react";
-import {
-  addToDb,
-  getShoppingCart,
-} from "../../utilities/localStorageDB";
+import { addToDb, getShoppingCart } from "../../utilities/localStorageDB";
 import CartModal from "../CartModal/CartModal";
 import Product from "../Product/Product";
 
 const Products = ({ setCartLength }) => {
   const [products, setProducts] = useState([]);
-  const [singleProduct, setSingleProduct] = useState([]);
+  const [singleCartProductArr, setSingleCartProductArr] = useState([]);
   const handleAddToCart = (product) => {
-    const newCart = [...singleProduct, product];
-    setSingleProduct(newCart);
+    const newCart = [...singleCartProductArr, product];
+    setSingleCartProductArr(newCart);
     addToDb(product.id);
   };
 
@@ -36,11 +33,11 @@ const Products = ({ setCartLength }) => {
       }
     }
 
-    setSingleProduct(savedCart);
+    setSingleCartProductArr(savedCart);
   }, [products]);
 
   useEffect(() => {
-    setCartLength(singleProduct.length);
+    setCartLength(singleCartProductArr.length);
   }, [handleAddToCart]);
 
   return (
@@ -61,8 +58,8 @@ const Products = ({ setCartLength }) => {
       </div>
 
       <CartModal
-        singleProduct={singleProduct}
-        setSingleProduct={setSingleProduct}
+        singleCartProductArr={singleCartProductArr}
+        setSingleCartProductArr={setSingleCartProductArr}
       />
     </>
   );

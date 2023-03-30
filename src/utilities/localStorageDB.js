@@ -1,5 +1,3 @@
-import React from "react";
-
 const addToDb = (id) => {
   let shoppingCart = getShoppingCart();
   // add quantity
@@ -32,4 +30,6 @@ const removeFromLocalStorage = (id) => {
   }
 };
 
-export { addToDb, getShoppingCart, removeFromLocalStorage };
+
+
+export { addToDb, getShoppingCart, removeFromLocalStorage};
