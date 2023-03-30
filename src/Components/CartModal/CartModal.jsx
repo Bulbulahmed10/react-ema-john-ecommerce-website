@@ -1,19 +1,36 @@
 import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faToiletPortable, faTrash } from "@fortawesome/free-solid-svg-icons";
+import { faTrash } from "@fortawesome/free-solid-svg-icons";
 import minus from "../.././assets/minus.png";
 import plus from "../.././assets/add.png";
-import { removeFromLocalStorage } from "../../utilities/localStorageDB";
-const CartModal = ({ singleProduct }) => {
+import { getShoppingCart } from "../../utilities/localStorageDB";
+import "./CartModal.css"
+
+
+
+const CartModal = ({ singleProduct, setSingleProduct }) => {
+
   let totalPrice = 0;
   let totalShipping = 0;
   for (const product of singleProduct) {
     totalPrice += product.price;
     totalShipping += product.shipping;
   }
-
   const totalTax = (totalPrice * 8) / 100;
   const grandTotal = totalPrice + totalShipping + totalTax;
+
+
+  const removeFromLocalStorage = (id) => {
+    let shoppingCart = getShoppingCart()
+    if(id in shoppingCart) {
+      delete shoppingCart[id]
+      localStorage.setItem("shopping-cart", JSON.stringify(shoppingCart))
+    }
+  const kd =  singleProduct.filter(pd => pd.id !== id)
+    setSingleProduct(kd)
+    
+  }
+
 
   return (
     <>
@@ -35,7 +52,7 @@ const CartModal = ({ singleProduct }) => {
                 <p>Total Price</p>
               </div>
               <section className="flex justify-between py-2">
-                <div className="w-[80%] flex flex-col gap-y-[12px]">
+                <div className="w-[80%] h-[340px] overflow-y-scroll flex flex-col gap-y-[12px]">
                   {singleProduct.map((singleCartProduct) => (
                     <div
                       key={singleCartProduct.id}
@@ -66,7 +83,7 @@ const CartModal = ({ singleProduct }) => {
                         />
 
                         <input
-                          className="w-14 mx-2 rounded-sm outline-none px-1"
+                          className="w-10 mx-2 rounded-sm outline-none px-1"
                           type="number"
                         />
                         <img className="w-5 cursor-pointer" src={plus} alt="" />
@@ -123,4 +140,4 @@ const CartModal = ({ singleProduct }) => {
   );
 };
 
-export default CartModal;
+export default CartModal

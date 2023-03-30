@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import React from "react";
 
 const addToDb = (id) => {
   let shoppingCart = getShoppingCart();
@@ -25,11 +25,11 @@ const getShoppingCart = () => {
 };
 
 const removeFromLocalStorage = (id) => {
-  let shoppingCart = getShoppingCart()
-  if(id in shoppingCart) {
-    delete shoppingCart[id]
-    localStorage.setItem("shopping-cart", JSON.stringify(shoppingCart))
+  let shoppingCart = getShoppingCart();
+  if (id in shoppingCart) {
+    delete shoppingCart[id];
+    localStorage.setItem("shopping-cart", JSON.stringify(shoppingCart));
   }
-}
+};
 
 export { addToDb, getShoppingCart, removeFromLocalStorage };

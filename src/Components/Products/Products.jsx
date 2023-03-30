@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import {
   addToDb,
   getShoppingCart,
-  removeFromLocalStorage,
 } from "../../utilities/localStorageDB";
 import CartModal from "../CartModal/CartModal";
 import Product from "../Product/Product";
@@ -61,7 +60,10 @@ const Products = ({ setCartLength }) => {
         </div>
       </div>
 
-      <CartModal singleProduct={singleProduct} />
+      <CartModal
+        singleProduct={singleProduct}
+        setSingleProduct={setSingleProduct}
+      />
     </>
   );
 };
